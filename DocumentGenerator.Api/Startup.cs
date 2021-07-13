@@ -28,8 +28,8 @@ namespace DocumentGenerator.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IDocumentService, CPFService>(); 
-            services.AddTransient<IDocumentService, CNHService>();
+            services.AddTransient<CPFService>(); 
+            services.AddTransient<CNHService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
