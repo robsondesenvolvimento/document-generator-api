@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace DocumentGenerator.Services
 {
-    public class CPFService
+    public class CPFService : IDocumentService
     {
-        private async Task<string> DigitCheckAndCreate(string cpf)
+        private async Task<string> DigitCheckAndCreate(string document)
         {
             return await Task.Run(() =>
             {
-                if (Regex.IsMatch(cpf, ".*[a-zA-Z\\.\\-]+.*")) throw new ArgumentException("CPF inválido, remova a mascara do CPF.");
-                if (cpf.Length != 11) throw new ArgumentException("CPF inválido");                
+                if (Regex.IsMatch(document, ".*[a-zA-Z\\.\\-]+.*")) throw new ArgumentException("CPF inválido, remova a mascara do CPF.");
+                if (document.Length != 11) throw new ArgumentException("CPF inválido");                
 
-                var _cpf = cpf;
+                var _cpf = document;
 
                 List<int> _digitosCpf = new();
 
-                cpf.Substring(0, 9).ToList().ForEach(digito =>
+                document.Substring(0, 9).ToList().ForEach(digito =>
                 {
                     var digitoAtual = Int32.Parse(digito.ToString());
                     _digitosCpf.Add(digitoAtual);
@@ -60,7 +60,7 @@ namespace DocumentGenerator.Services
             }).ConfigureAwait(false);
         }
 
-        public async Task<string> CreateCPF()
+        public async Task<string> Create()
         {
             return await Task.Run(async () =>
             {
@@ -71,13 +71,13 @@ namespace DocumentGenerator.Services
             }).ConfigureAwait(false);            
         }
 
-        public async Task<bool> IsValid(string cpf)
+        public async Task<bool> IsValid(string document)
         {
-            var _cpf = await DigitCheckAndCreate(cpf).ConfigureAwait(false);
-            return cpf == _cpf;
+            var _cpf = await DigitCheckAndCreate(document).ConfigureAwait(false);
+            return document == _cpf;
         }
 
-        public async Task<List<string>> CreateListCPF(int lenghtList)
+        public async Task<List<string>> CreateList(int lenghtList)
         {
             if (lenghtList > 100) throw new Exception("Max lenght is 100.");
 
@@ -85,7 +85,7 @@ namespace DocumentGenerator.Services
             {
                 var lista = new List<string>();
                 for (int i = 0; i < lenghtList; i++)
-                    lista.Add(await CreateCPF());
+                    lista.Add(await Create());
                 return lista;
             });            
         }

@@ -11,40 +11,40 @@ namespace DocumentGenerator.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    public class CPFController : ControllerBase
+    public class CNHController : ControllerBase
     {
-        private readonly IDocumentService _cpfService;
-        public CPFController(IDocumentService cpfService)
+        private readonly IDocumentService _cnhService;
+        public CNHController(IDocumentService cnhService)
         {
-            _cpfService = cpfService;
+            _cnhService = cnhService;
         }
 
         [HttpGet]
-        [Route("isvalid/{cpf}")]
+        [Route("isvalid/{cnh}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> GetIsValidAsync([FromRoute] string? cpf)
+        public async Task<IActionResult> GetIsValidAsync([FromRoute] string? cnh)
         {
-            if(cpf == null) NotFound();
+            if (cnh == null) NotFound();
             try
             {
-                var isValid = await _cpfService.IsValid(cpf);
+                var isValid = await _cnhService.IsValid(cnh);
                 return Ok(isValid);
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 //return StatusCode(500, ex.Message);
                 return BadRequest(ex.Message);
             }
-            
+
         }
 
         [HttpGet]
         [Route("create")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        public async Task<IActionResult> GetCreateCPFAsync()
+        public async Task<IActionResult> GetCreateCNHAsync()
         {
-            var cpf = await _cpfService.Create();
+            var cpf = await _cnhService.Create();
             return Ok(cpf);
         }
 
@@ -55,8 +55,8 @@ namespace DocumentGenerator.Api.Controllers
         {
             if (lenght == null) lenght = 100;
 
-            var cpfs = await _cpfService.CreateList((int)lenght);
-            return Ok(cpfs);
+            var cnhs = await _cnhService.CreateList((int)lenght);
+            return Ok(cnhs);
         }
     }
 }
