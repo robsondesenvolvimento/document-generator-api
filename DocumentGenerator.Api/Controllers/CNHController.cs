@@ -21,10 +21,10 @@ namespace DocumentGenerator.Api.Controllers
         }
 
         [HttpGet]
-        [Route("isvalid/{cnh}")]
+        [Route("isvalid/{cnh?}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> GetIsValidAsync([FromRoute] string? cnh)
+        public async Task<IActionResult> GetIsValidAsync([FromRoute] string cnh)
         {
             if (cnh == null) NotFound();
             try

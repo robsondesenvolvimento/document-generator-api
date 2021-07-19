@@ -10,21 +10,21 @@ namespace DocumentGenerator.Test
         [Fact]
         public async Task CreateObjectCPFServiceAndCheckIsValid()
         {
-            var cpf = new Services.CPFService();
+            IDocumentService cpf = new CPFService();
             Assert.True(await cpf.IsValid("60229466036"));
         }
 
         [Fact]
         public async Task CreateObjectCPFServiceAndCheckNotIsValid()
         {
-            var cpf = new Services.CPFService();
+            IDocumentService cpf = new CPFService();
             Assert.False(await cpf.IsValid("60229466032"));
         }
 
         [Fact]
         public async Task CreateObjectCPFServiceAndCreateCPFAndAfterCheckIsValid()
         {
-            var cpf = new Services.CPFService();
+            IDocumentService cpf = new CPFService();
             var cpfCreate = await cpf.Create();
             Assert.True(await cpf.IsValid(cpfCreate));
         }
@@ -32,7 +32,7 @@ namespace DocumentGenerator.Test
         [Fact]
         public async Task CreateObjectCPFServiceAndCreateListOfCPF()
         {
-            var cpf = new Services.CPFService();
+            IDocumentService cpf = new CPFService();
             var lista = await cpf.CreateList(100);
             Assert.True(lista.Count == 100);
         }
