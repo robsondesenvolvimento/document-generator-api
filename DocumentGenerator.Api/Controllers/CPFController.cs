@@ -13,7 +13,8 @@ namespace DocumentGenerator.Api.Controllers
     [Produces("application/json")]
     public class CPFController : ControllerBase
     {
-        private readonly CPFService _cpfService;
+        private readonly IDocumentService _cpfService;
+
         public CPFController(CPFService cpfService)
         {
             _cpfService = cpfService;

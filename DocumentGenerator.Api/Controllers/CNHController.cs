@@ -13,7 +13,8 @@ namespace DocumentGenerator.Api.Controllers
     [Produces("application/json")]
     public class CNHController : ControllerBase
     {
-        private readonly CNHService _cnhService;
+        private readonly IDocumentService _cnhService;
+
         public CNHController(CNHService cnhService)
         {
             _cnhService = cnhService;
